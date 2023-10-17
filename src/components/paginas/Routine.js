@@ -9,10 +9,10 @@ const Routine = () => {
     
     const formik =useFormik({
         initialValues :{
-            ejercicio:'',
-            hora:'',
-            maquina:'',
-            descripcion:'',
+            exercise:'',
+            time:'',
+            machine:'',
+            description:'',
         },
         onSubmit: datos=>{
             try {
@@ -33,12 +33,12 @@ const Routine = () => {
                 onSubmit={formik.handleSubmit}
             >
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='ejercicio'>Ejercicio</label>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='exercise'>Ejercicio</label>
                     <select
                          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                         id='ejercicio'
-                         name='ejercicio'
-                         value={formik.values.ejercicio}
+                         id='exercise'
+                         name='exercise'
+                         value={formik.values.exercise}
                          onChange={formik.handleChange}
                     >
                         <option value=''>-- Seleccione --</option>
@@ -50,12 +50,12 @@ const Routine = () => {
                     </select>
                 </div>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='hora'>Hora</label>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='time'>Hora</label>
                     <select
                          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                         id='hora'
-                         name='hora'
-                         value={formik.values.hora}
+                         id='time'
+                         name='time'
+                         value={formik.values.time}
                          onChange={formik.handleChange}
                     >
                         <option value=''>-- Seleccione --</option>
@@ -68,12 +68,12 @@ const Routine = () => {
                     </select>
                 </div>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='maquina'>Maquina</label>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='machine'>Maquina</label>
                     <select
                          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                         id='maquina'
-                         name='maquina'
-                         value={formik.values.maquina}
+                         id='machine'
+                         name='machine'
+                         value={formik.values.machine}
                          onChange={formik.handleChange}
                     >
                         <option value=''>-- Seleccione --</option>
@@ -85,12 +85,12 @@ const Routine = () => {
                     </select>
                 </div>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='descripcion'>Descripcion</label>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='description'>Descripcion</label>
                     <textarea
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-40'
-                        id='descripcion'
+                        id='description'
                         placeholder='Descripcion de la rutina'
-                        value={formik.values.descripcion}
+                        value={formik.values.description}
                         onChange={formik.handleChange}
                     ></textarea>
                 </div>
@@ -98,6 +98,7 @@ const Routine = () => {
                     type='submit'
                     className='bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold'
                     value='Asignar Rutina'
+                    onClick={() => {alert("Rutina Asignada")}}
                     
                 />
             </form>

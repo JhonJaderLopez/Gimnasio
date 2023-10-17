@@ -24,7 +24,7 @@ const RegisterClass = () => {
                     Proposito del entrenamiento: 
                 </Typography>
                 <Typography>
-                    Bajar grasa 
+                    Bajar grasa gh
                 </Typography>
                 <Typography variant='h6' color='blue-gray'>
                     Paquete de horas: 
