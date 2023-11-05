@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {useFormik} from 'formik'
+import {FirebaseContext } from '../firebase';
 import {
     Card,
     Input,
@@ -8,7 +9,11 @@ import {
     Typography,
   } from "@material-tailwind/react";
 
+
 const Register = () => {
+
+    const {firebase} = useContext(FirebaseContext);
+    console.log({FirebaseContext});
 
     const formik =useFormik({
         initialValues :{
@@ -16,9 +21,14 @@ const Register = () => {
             email:'',
             password:'',
         },
-        onSubmit: datos=>{
-            console.log(datos);
-        }
+
+        onSubmit: users=>{
+          try {
+              firebase.db.collection('users').add(users);
+          } catch (error) {
+              
+          }
+      }
     });
 
 
@@ -36,7 +46,7 @@ const Register = () => {
           <Input 
             size="lg" 
             label="name"
-            id='name'
+            id='name' 
             onChange={formik.handleChange}
             value={formik.values.name} 
           />

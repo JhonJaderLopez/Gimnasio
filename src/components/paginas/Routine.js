@@ -1,8 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import {useFormik} from 'formik'
 import {FirebaseContext } from '../firebase';
+import FileUploader from 'react-firebase-file-uploader';
 
 const Routine = () => {
+
+    const [subiendo, guardarSubiendo] = useState(false);
+    const [progreso, guardarProgreso] = useState(0);
+    const [urlimagen, guardarUrlimagen] = useState("");
 
     const {firebase} = useContext(FirebaseContext);
     console.log({FirebaseContext});
@@ -12,16 +17,47 @@ const Routine = () => {
             exercise:'',
             time:'',
             machine:'',
+            imagen:'',
             description:'',
         },
         onSubmit: datos=>{
             try {
+                datos.existencia=true;
+                datos.imagen = urlimagen;
                 firebase.db.collection('datos').add(datos);
             } catch (error) {
                 
             }
         }
     });
+
+
+    const handleUploadStart = () =>{
+        guardarProgreso(0);
+        guardarSubiendo(true);
+    }
+    const handleUploadError = error =>{
+        guardarSubiendo(false);
+        console.log(error);
+    }
+    const handleUploadSuccess =  async nombre =>{
+        guardarProgreso(100);
+        guardarSubiendo(false);
+
+
+        const url = await firebase
+                .storage
+                .ref("clases")
+                .child(nombre)
+                .getDownloadURL();
+
+        console.log(url);
+        guardarUrlimagen(url);
+    }
+    const handleProgress = progreso =>{
+        guardarProgreso(progreso);
+        console.log(progreso);
+    }
 
   return (
     <>
@@ -82,7 +118,36 @@ const Routine = () => {
                         <option value='Caminadora'>Caminadora</option>
                         <option value='Banco-Abdominal'>Banco Abdominal</option>
                         <option value='Banco-Multiple-Polea'>Banco Multiple Polea</option>
-                    </select>
+                    </select>       
+                </div>
+                <div className='mb-4'>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='imagen'>imagen</label>
+                    <FileUploader
+                        accept="image/*"
+                        id="imagen"
+                        name="imagen"
+                        randomizeFilename
+                        storageRef={firebase.storage.ref("clases")}
+                        onUploadStart={handleUploadStart}
+                        onUploadError={handleUploadError}
+                        onUploadSuccess={handleUploadSuccess}
+                        onProgress={handleProgress}
+                    
+                    />    
+                    {subiendo && (
+                        <div className='h-12 relative w-full border'>
+                            <div className='bg-green-500 absolute left-0 top-0 text-white px-2 text-sm flex items-center' style={{ width : `${progreso}%` }}>
+                                {progreso}%
+                            </div>
+
+                        </div>
+                    )}
+
+                    {urlimagen && (
+                        <p className='bg-green-500 text-white p-3 text-center my-5'>
+                            La imagen se subio correctamente
+                        </p>
+                    )} 
                 </div>
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='description'>Descripcion</label>
